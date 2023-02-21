@@ -1,21 +1,21 @@
 	processor 6502
 
-    include "vcs.h"
+    	include "vcs.h"
 	include "macro.h"
 
 	seg code
-    org $F000
+    	org $F000
 
 Start:
 	CLEAN_START 
 StartFrame:
 	lda #2           
-    sta VBLANK       
-    sta VSYNC        
+    	sta VBLANK       
+    	sta VSYNC        
 
 	sta WSYNC        
-    sta WSYNC        
-    sta WSYNC        
+	sta WSYNC        
+    	sta WSYNC        
 
 	lda #0
 	sta VSYNC        
@@ -23,15 +23,15 @@ StartFrame:
 LoopVBlank:
 	sta WSYNC        
 	dex				
-    bne LoopVBlank   
+    	bne LoopVBlank   
 
 	lda #0
 	sta VBLANK		
 
 	ldx #192
 LoopVisible:
-    stx COLUBK   
-    sta WSYNC	
+    	stx COLUBK   
+    	sta WSYNC	
 	dex	
 	bne LoopVisible 
 
