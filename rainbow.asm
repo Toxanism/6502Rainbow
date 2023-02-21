@@ -7,44 +7,44 @@
     org $F000
 
 Start:
-	CLEAN_START      ; call macro to safely clear RAM and TIA
+	CLEAN_START 
 StartFrame:
-	lda #2           ; same as binary value %00000010
-    sta VBLANK       ; turn on VBLANK
-    sta VSYNC        ; turn on VSYNC
+	lda #2           
+    sta VBLANK       
+    sta VSYNC        
 
-	sta WSYNC        ; first scanline
-    sta WSYNC        ; second scanline
-    sta WSYNC        ; third scanline
+	sta WSYNC        
+    sta WSYNC        
+    sta WSYNC        
 
 	lda #0
-	sta VSYNC        ; turn off VSYNC
-	ldx #37          ; X = 37 (to count 37 scanlines)
+	sta VSYNC        
+	ldx #37          
 LoopVBlank:
-	sta WSYNC        ; hit WSYNC and wait for the next scanline
-	dex				 ; X--
-    bne LoopVBlank   ; loop while X != 0
+	sta WSYNC        
+	dex				
+    bne LoopVBlank   
 
 	lda #0
-	sta VBLANK		 ; turn off VBLANK
+	sta VBLANK		
 
-	ldx #192		 ; counter for 192 visible scanlines
+	ldx #192
 LoopVisible:
-    stx COLUBK       ; set the background color
-    sta WSYNC		 ; wait for the next scanline
-	dex				 ; X--
-	bne LoopVisible  ; loop while X != 0
+    stx COLUBK   
+    sta WSYNC	
+	dex	
+	bne LoopVisible 
 
 	lda #2
-	sta VBLANK       ; hit and turn on VBLANK again
+	sta VBLANK     
 
-	ldx #30			 ; counter for 30 scanlines
+	ldx #30		
 LoopOverscan:
-	sta WSYNC		 ; wait for the next scanline
-	dex				 ; X--
-	bne	LoopOverscan ; loop while X != 0
+	sta WSYNC
+	dex	
+	bne
 
-	jmp StartFrame   ; go to next frame
+	jmp StartFrame 
 
 	org $FFFC
 	.word Start
